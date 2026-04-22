@@ -16,7 +16,3 @@ Thumbs.db
 # Datasets locales
 data/raw/*.csv
 data/raw/*.zip
-
-# Materiales locales de apoyo oral
-documentacion/md/resumen_presentacion.md
-documentacion/docx/resumen_presentacion.docx

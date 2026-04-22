@@ -10,7 +10,7 @@
 
 Este documento presenta la documentación técnica y metodológica del proyecto de detección de fraude transaccional desarrollado a partir del dataset IEEE-CIS Fraud Detection. Su finalidad es acompañar el notebook principal con una explicación ordenada de las decisiones analíticas, los resultados obtenidos y las principales conclusiones del trabajo.
 
-La documentación está alineada con el notebook `notebooks/ieee_cis_fraud_detection_master.ipynb` y debe mantenerse sincronizada con él. Si el notebook cambia, también deben revisarse este documento, el resumen ejecutivo, el `README.md`, las figuras exportadas y los materiales locales de presentación cuando corresponda.
+La documentación está alineada con el notebook `notebooks/ieee_cis_fraud_detection_master.ipynb` y debe mantenerse sincronizada con él. Si el notebook cambia, también deben revisarse este documento, el resumen ejecutivo, el `README.md` y las figuras exportadas cuando corresponda.
 
 ## 2. Contexto y objetivo del proyecto
 
@@ -154,9 +154,8 @@ Toda modificación futura del notebook principal debe revisarse contra esta docu
 
 - `documentacion/md/documentacion_detallada.md`
 - `documentacion/md/resumen_ejecutivo.md`
-- el material local de presentación, cuando corresponda
 - las versiones `.docx` públicas equivalentes en `documentacion/docx/`
 - `README.md`
 - las figuras en `reports/figures/` cuando corresponda
 
-Esta regla mantiene la consistencia entre el análisis reproducible, la documentación formal y los materiales de presentación del proyecto.
+Esta regla mantiene la consistencia entre el análisis reproducible, la documentación formal y los materiales asociados al proyecto.

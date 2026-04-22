@@ -66,4 +66,4 @@ El principal aporte del proyecto es integrar desempeño predictivo con una evalu
 
 ## Nota de mantenimiento
 
-Si el notebook principal cambia, también deben revisarse este resumen, la documentación detallada, el `README.md`, las versiones `.docx` públicas, las figuras asociadas y los materiales locales de presentación cuando corresponda.
+Si el notebook principal cambia, también deben revisarse este resumen, la documentación detallada, el `README.md`, las versiones `.docx` públicas y las figuras asociadas cuando corresponda.

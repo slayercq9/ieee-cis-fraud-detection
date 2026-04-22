@@ -75,8 +75,6 @@ La documentación pública principal incluye:
 - `documentacion_detallada`: informe técnico y metodológico completo del proyecto.
 - `resumen_ejecutivo`: síntesis breve para lectura rápida.
 
-Los materiales de apoyo oral para presentación se mantienen localmente y están excluidos del repositorio público mediante `.gitignore`.
-
 ## Ejecución local
 
 1. Coloque `train_transaction.csv` y `train_identity.csv` en `data/raw/`.
