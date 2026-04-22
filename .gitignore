@@ -1,0 +1,22 @@
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.tmp
+*.temp
+*.log
+*.bak
+*.swp
+*.swo
+Thumbs.db
+.DS_Store
+
+# Datasets locales
+data/raw/*.csv
+data/raw/*.zip
+
+# Materiales locales de apoyo oral
+documentacion/md/resumen_presentacion.md
+documentacion/docx/resumen_presentacion.docx
