@@ -16,3 +16,7 @@ Thumbs.db
 # Datasets locales
 data/raw/*.csv
 data/raw/*.zip
+
+# Salidas generadas
+reports/submissions/*.csv
+reports/submissions/*.zip
