@@ -113,6 +113,8 @@ El notebook incluye una celda inicial de orientación para detectar ejecución l
 - `v1.0.0`: versión inicial estable.
 - `v1.1.0`: versión en preparación, orientada a limpieza del repositorio, soporte documental para el dataset completo y preparación de salidas de predicción.
 
+El historial de cambios del proyecto se mantiene en `CHANGELOG.md`.
+
 ## Regla de mantenimiento
 
 Toda modificación futura del notebook debe reflejarse también, cuando corresponda, en la documentación, el `README.md`, las versiones `.docx` públicas y las figuras exportadas. Esta regla mantiene consistencia entre el análisis reproducible, la documentación y los materiales asociados al proyecto.
