@@ -9,12 +9,17 @@ Este proyecto utiliza versionado semántico para organizar cambios mayores, mejo
 - Preparación de `reports/submissions/` para almacenar salidas de predicción generadas localmente.
 - Documentos de diagnóstico y planificación para orientar la construcción de `v1.1.0`.
 - Referencia al dataset completo con archivos de entrenamiento, prueba oficial y plantilla de envío.
+- Validación formal del dataset completo mediante `scripts/validate_dataset.py`.
+- Alcance previsto para comparación ampliada de modelos: `DummyClassifier`, regresión logística, Random Forest, LightGBM, TabPFN y modelo final.
+- Plan para integración del test oficial y generación de predicciones finales.
+- Documentación explicativa prevista para describir modelos, función, interpretación y límites.
 
 ### Cambiado
 
 - README actualizado con una estructura más clara, instrucciones de ejecución y explicación del uso de archivos `train` y `test`.
 - Descripción de datos ajustada para considerar los cinco CSV esperados en `data/raw/`.
 - Reglas de mantenimiento reforzadas para conservar consistencia entre notebook, documentación y figuras.
+- Plan técnico de `v1.1.0` ampliado para permitir cambios controlados en notebook, código, métricas, resultados y documentación.
 
 ### Corregido
 
@@ -25,6 +30,7 @@ Este proyecto utiliza versionado semántico para organizar cambios mayores, mejo
 
 - Integrar el test oficial como bloque de inferencia sin usarlo para calcular métricas.
 - Validar generación opcional de predicciones finales con formato compatible con `sample_submission.csv`.
+- Implementar comparación ampliada de modelos y pruebas mínimas de reproducibilidad.
 - Revisar que las figuras exportadas sigan alineadas con la versión final del notebook.
 - Confirmar que el estado de Git incluya solo cambios intencionales antes del release.
 

@@ -1,76 +1,84 @@
-# Plan de trabajo para v1.1.0
+# Plan técnico para v1.1.0
 
 ## 1. Objetivo de v1.1.0
 
-Preparar una versión más limpia, reproducible y completa del proyecto `ieee-cis-fraud-detection`, incorporando soporte documental y operativo para el dataset completo de IEEE-CIS Fraud Detection. La versión debe mantener intactos los resultados ya obtenidos y mejorar la claridad de uso, revisión y publicación del repositorio.
+Construir una versión ampliada de `ieee-cis-fraud-detection` que integre el dataset completo, compare más modelos, permita predicciones finales sobre el test oficial y fortalezca la documentación técnica. Esta versión podrá modificar notebook, código, métricas, resultados, documentación y figuras cuando sea necesario para mejorar el proyecto.
 
-## 2. Alcance incluido en v1.1.0
+## 2. Alcance ampliado
 
-- Limpieza del repositorio: verificar que no existan archivos temporales, salidas pesadas innecesarias ni datos agregados al índice de Git.
-- README mejorado: actualizar instrucciones, estructura y datos requeridos para reflejar el uso de los cinco CSV.
-- Documentación complementaria: mantener alineados `documentacion/md/` y `documentacion/docx/` con los cambios documentales relevantes.
-- Validación del dataset completo: confirmar presencia, encabezados mínimos y consistencia básica de los cinco archivos en `data/raw/`.
-- Uso de los cinco CSV: documentar y preparar el flujo para `train_transaction.csv`, `train_identity.csv`, `test_transaction.csv`, `test_identity.csv` y `sample_submission.csv`.
-- Integración del test oficial: incorporar el conjunto oficial de prueba como datos para inferencia, sin usarlo para métricas ni para ajustar decisiones del modelo.
-- Generación opcional de predicciones finales: permitir una salida tipo submission cuando el usuario decida ejecutarla.
-- Revisión del notebook y del código: comprobar rutas, comentarios, dependencias, celdas clave y consistencia de nombres sin cambiar resultados previos.
-- Pruebas mínimas de reproducibilidad: validar que el proyecto abre, detecta datos y ejecuta verificaciones livianas sin correr todo el flujo completo.
-- Preparación del release `v1.1.0`: dejar checklist, cambios documentados y estado de Git listo para revisión.
+- Validar formalmente los cinco CSV: `train_transaction.csv`, `train_identity.csv`, `test_transaction.csv`, `test_identity.csv` y `sample_submission.csv`.
+- Usar los datos etiquetados de train para entrenamiento, validación y prueba interna.
+- Mantener el test oficial separado de las métricas porque no contiene etiquetas reales.
+- Integrar `test_transaction.csv` y `test_identity.csv` para generar predicciones finales.
+- Usar `sample_submission.csv` como estructura de salida.
+- Normalizar nombres en el test oficial: `train_identity` usa columnas tipo `id_01`, mientras `test_identity` puede usar `id-01`; debe contemplarse conversión de `id-` a `id_`.
+- Comparar `DummyClassifier`, regresión logística, Random Forest, LightGBM, TabPFN y un modelo final entrenado con más datos etiquetados.
+- Agregar una sección o documento explicativo sobre modelos, función, lectura de resultados y límites.
+- Actualizar documentación, figuras y resultados cuando cambie el flujo.
 
-## 3. Mejoras excluidas o dejadas para después
+## 3. Modelos y comparación
 
-- Reentrenamiento completo de modelos.
-- Cambio de métricas, gráficos o resultados ya reportados.
-- Ajuste amplio de hiperparámetros.
-- Nuevas técnicas de modelado.
-- Cambios estructurales grandes en el notebook.
-- Automatización completa de despliegue o integración continua.
-- Publicación de datasets locales en el repositorio.
+- `DummyClassifier`: referencia mínima basada en prevalencia. Aporta un piso de comparación; no aprende patrones. Se comparará contra todos los modelos mediante métricas de clase desbalanceada.
+- Regresión logística: baseline interpretable y lineal. Aporta lectura de señales generales; puede limitarse ante interacciones y no linealidad. Se comparará contra modelos de árboles y TabPFN.
+- Random Forest: modelo de ensamble robusto para relaciones no lineales. Aporta contraste frente a LightGBM; puede ser costoso y menos competitivo en alta dimensionalidad.
+- LightGBM: modelo tabular principal por eficiencia y capacidad de capturar interacciones. Aporta desempeño fuerte; requiere control de sobreajuste e interpretación cuidadosa.
+- TabPFN: modelo moderno para tabular. Aporta comparación adicional; puede tener restricciones de tamaño, memoria o compatibilidad.
+- Modelo final con más datos etiquetados: se entrenará después de seleccionar el mejor enfoque. Aporta una versión final para inferencia sobre test oficial; no debe usarse para redefinir métricas internas de manera retrospectiva.
+
+La comparación debe priorizar PR-AUC, ROC-AUC, precision, recall, F1 y matriz de confusión. El análisis debe explicar diferencias entre modelos, no solo mostrar tablas.
 
 ## 4. Orden recomendado de implementación
 
-1. Confirmar estado base con `git status --short` y revisar que la rama sea `mejora-v1.1.0`.
-2. Validar los cinco CSV mediante encabezados, tamaño, columnas clave y lectura de una fila.
-3. Actualizar `README.md` y `data/README.md` para describir el dataset completo y el rol de cada archivo.
-4. Revisar `.gitignore` para asegurar exclusión de CSV, ZIP, cachés y temporales.
-5. Ajustar documentación complementaria para reflejar el flujo con archivos de prueba y salida opcional.
-6. Revisar notebook sin ejecución completa: rutas, celdas de configuración, nombres de variables y notas de uso.
-7. Diseñar la integración del test oficial como bloque de inferencia separado, sin afectar validación ni prueba interna.
-8. Preparar una ruta opcional para generar predicciones finales con formato compatible con `sample_submission.csv`.
-9. Ejecutar pruebas mínimas de reproducibilidad: formato del notebook, existencia de rutas, dependencias declaradas y validación de datos.
-10. Verificar que solo queden cambios intencionales antes de cerrar la versión.
+1. Ejecutar `python scripts/validate_dataset.py`.
+2. Normalizar columnas `id-` a `id_` para el test oficial sin alterar los archivos originales.
+3. Revisar notebook, rutas, dependencias y documentación antes de ampliar el flujo.
+4. Integrar los cinco CSV en el diseño de trabajo.
+5. Mantener evaluación interna solo con datos etiquetados de train.
+6. Añadir Random Forest y TabPFN como comparación controlada.
+7. Seleccionar el mejor enfoque con métricas internas.
+8. Entrenar el modelo final con más datos etiquetados cuando el criterio de selección esté definido.
+9. Generar predicciones finales sobre test oficial con formato de `sample_submission.csv`.
+10. Actualizar documentación, figuras, resultados y checklist del release.
 
 ## 5. Riesgos técnicos
 
-- Los archivos completos son grandes y pueden exigir memoria elevada durante ejecución.
-- Dependencias como MAPIE, LightGBM o SHAP pueden cambiar comportamiento entre versiones.
-- Usar el test oficial para decisiones de evaluación produciría una lectura metodológica inválida.
-- Mezclar predicciones finales con métricas internas puede generar confusión en la interpretación.
-- Si las figuras no se regeneran junto con cambios del notebook, podrían quedar desalineadas.
-- La sincronización manual entre Markdown y DOCX puede dejar diferencias si no se revisa al cierre.
+- Alto consumo de memoria por tamaño del dataset y modelos adicionales.
+- Incompatibilidad de nombres `id-` frente a `id_` en identity de test.
+- Uso indebido del test oficial para calcular métricas.
+- Comparaciones no equivalentes si los modelos usan particiones o preprocesamientos distintos.
+- TabPFN puede requerir muestreo, reducción de variables o ajustes por limitaciones operativas.
+- Predicciones finales pueden versionarse por error si no se respeta `.gitignore`.
 
-## 6. Criterios de aceptación
+## 6. Pruebas requeridas
 
-- `README.md` y `data/README.md` describen correctamente los cinco CSV.
-- `.gitignore` mantiene excluidos los datos locales y archivos temporales.
-- La validación liviana confirma que los cinco CSV existen y tienen columnas esperadas.
-- El notebook conserva resultados, salidas y lógica previa.
-- La integración del test oficial queda separada de métricas de validación y prueba interna.
-- La generación de predicciones finales, si se incorpora, usa el formato de `sample_submission.csv`.
-- La documentación pública queda sincronizada con el estado del proyecto.
-- `git status --short` muestra únicamente cambios esperados para la versión.
+- Validar dataset completo antes de ejecutar el flujo.
+- Confirmar que CSV y predicciones generadas no estén preparados para commit.
+- Validar notebook, rutas, dependencias y documentación antes del release.
+- Verificar que las métricas se calculen solo con datos etiquetados.
+- Confirmar que las predicciones finales tengan columnas y orden compatibles con `sample_submission.csv`.
 
-## 7. Checklist previo al release v1.1.0
+## 7. Criterios de aceptación
 
-- [ ] Confirmar rama `mejora-v1.1.0`.
-- [ ] Revisar que no haya CSV ni ZIP preparados para commit.
-- [ ] Validar los cinco archivos de `data/raw/`.
-- [ ] Revisar README y documentación de datos.
-- [ ] Verificar dependencias declaradas en `requirements.txt`.
-- [ ] Comprobar que las figuras referenciadas existen.
-- [ ] Revisar notebook sin ejecutar entrenamiento completo.
-- [ ] Confirmar separación entre evaluación interna e inferencia sobre test oficial.
-- [ ] Probar generación opcional de predicciones finales si se implementa.
-- [ ] Revisar sincronía entre Markdown y DOCX.
-- [ ] Confirmar estado final con `git status --short`.
-- [ ] Preparar tag `v1.1.0` solo después de la revisión final.
+- Los cinco CSV están validados y documentados.
+- La normalización `id-` a `id_` está contemplada para test oficial.
+- La evaluación interna usa solo train etiquetado.
+- El test oficial se usa únicamente para predicciones finales.
+- Los modelos están comparados con métricas adecuadas para clases desbalanceadas.
+- La interpretación explica diferencias, fortalezas y límites de cada enfoque.
+- El modelo final se entrena bajo un criterio explícito y genera salida compatible con `sample_submission.csv`.
+- La documentación explicativa de modelos queda integrada.
+- Notebook, código, documentación, dependencias y rutas pasan revisión previa.
+- `git status --short` muestra solo cambios intencionales.
+
+## 8. Checklist previo al release v1.1.0
+
+- [ ] Ejecutar validación formal del dataset.
+- [ ] Confirmar exclusión de CSV y predicciones generadas.
+- [ ] Revisar normalización de columnas identity en test.
+- [ ] Verificar particiones internas y separación del test oficial.
+- [ ] Comparar Dummy, regresión logística, Random Forest, LightGBM y TabPFN.
+- [ ] Definir y entrenar modelo final con más datos etiquetados.
+- [ ] Generar predicciones finales si el flujo queda aprobado.
+- [ ] Actualizar documentación explicativa y figuras necesarias.
+- [ ] Revisar reproducibilidad mínima del proyecto.
+- [ ] Preparar release `v1.1.0` sin marcarlo como final antes de la revisión.
